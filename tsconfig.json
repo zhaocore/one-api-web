@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": false,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ],
+      "*": [
+        "./*",
+        "./node_modules/*"
+      ],
+      "@librechat/client": [
+        "./src/librechat-client/index.ts"
+      ],
+      "librechat-data-provider": [
+        "./src/librechat-data-provider/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "vite.config.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "src/vite-env.d.ts"
+  ]
+}
