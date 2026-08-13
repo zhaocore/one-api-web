@@ -1,0 +1,5 @@
+import { FormEvent, useState } from 'react';
+import { Button, OGDialog, OGDialogContent, OGDialogHeader, OGDialogTitle, Switch } from '@librechat/client';
+import { request } from '~/api/oneApi';
+import Field from '../../components/Field';
+export default function TokenDialog({open,onOpenChange,onDone}:{open:boolean;onOpenChange:(value:boolean)=>void;onDone:()=>Promise<void>}) { const [name,setName]=useState(''); const [unlimited,setUnlimited]=useState(false); const save=async(event:FormEvent)=>{event.preventDefault();await request('/api/token',{method:'POST',body:JSON.stringify({name,unlimited_quota:unlimited,remain_quota:0,expired_time:-1})});onOpenChange(false);await onDone();}; return <OGDialog open={open} onOpenChange={onOpenChange}><OGDialogContent><OGDialogHeader><OGDialogTitle>新建令牌</OGDialogTitle></OGDialogHeader><form onSubmit={save} className="space-y-4"><Field label="令牌名称"><input required value={name} onChange={(event)=>setName(event.target.value)}/></Field><Switch checked={unlimited} onCheckedChange={setUnlimited} aria-label="不限额"/><Button type="submit">创建令牌</Button></form></OGDialogContent></OGDialog>; }

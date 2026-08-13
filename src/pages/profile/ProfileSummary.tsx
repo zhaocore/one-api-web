@@ -1,0 +1,5 @@
+import { Pencil } from 'lucide-react';
+import { Button } from '@librechat/client';
+import { formatQuota, User } from '~/api/oneApi';
+export default function ProfileSummary({user}:{user:User|null}) { return <section className="rounded-2xl border bg-white p-6 dark:bg-slate-900"><h3 className="text-lg font-bold">{user?.display_name||user?.username||'加载中'}</h3><p className="text-slate-500">{user?.email||'尚未绑定邮箱'}</p><div className="mt-7 grid gap-4 sm:grid-cols-2"><Fact label="用户名" value={user?.username||'—'}/><Fact label="用户组" value={user?.group||'default'}/><Fact label="已用额度" value={formatQuota(user?.used_quota??0)}/><Fact label="剩余额度" value={formatQuota((user?.quota??0)-(user?.used_quota??0))}/></div><Button className="mt-7" variant="outline"><Pencil className="size-4"/>编辑资料</Button></section>; }
+function Fact({label,value}:{label:string;value:string}){return <div className="rounded-xl bg-slate-50 p-4 dark:bg-slate-800"><small className="text-slate-500">{label}</small><b className="block">{value}</b></div>;}
