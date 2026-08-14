@@ -59,7 +59,7 @@ export default function TopupPage() {
     <>
       <PageHeader title="充值中心" description="兑换额度或查看账户余额。" />
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 p-7 text-white">
+        <section className="rounded-2xl bg-gradient-to-br from-teal-800 to-teal-600 p-7 text-white">
           <Wallet className="size-9" />
           <p className="mt-10">账户可用额度</p>
           <b className="mt-2 block text-4xl">{renderQuota(quota)}</b>

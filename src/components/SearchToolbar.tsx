@@ -9,7 +9,7 @@ export default function SearchToolbar({ onSearch, children }: { onSearch: (value
         <input
           onChange={(event) => onSearch(event.target.value)}
           placeholder="搜索名称、模型或 ID"
-          className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900"
+          className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none focus:border-teal-700 dark:border-slate-700 dark:bg-slate-900"
         />
       </label>
       {children}

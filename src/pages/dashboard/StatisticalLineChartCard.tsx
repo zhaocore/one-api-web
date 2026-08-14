@@ -9,10 +9,12 @@ export default function StatisticalLineChartCard({
   title,
   chartData,
   isLoading,
+  emphasis,
 }: {
   title: string;
   chartData: LineCardOption | null;
   isLoading: boolean;
+  emphasis: 'primary' | 'secondary';
 }) {
   const options = {
     chart: {
@@ -21,7 +23,7 @@ export default function StatisticalLineChartCard({
       type: 'line' as const,
     },
     dataLabels: { enabled: false },
-    colors: ['#6366f1'],
+    colors: ['#0f766e'],
     stroke: { curve: 'smooth' as const, width: 3 },
     tooltip: {
       theme: 'dark' as const,
@@ -30,19 +32,25 @@ export default function StatisticalLineChartCard({
   };
 
   return (
-    <section className="rounded-2xl border bg-white p-5 dark:bg-slate-900">
-      <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400">{title}</h3>
+    <section
+      className={`group relative overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white p-5 shadow-[0_20px_40px_-28px_rgba(15,23,42,0.32)] transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-28px_rgba(15,23,42,0.42)] active:translate-y-0 dark:border-slate-800 dark:bg-slate-950 dark:shadow-none ${
+        emphasis === 'primary' ? 'md:p-6' : ''
+      }`}>
+      <div className="absolute inset-x-6 top-0 h-px bg-teal-700/70 dark:bg-teal-400/70" />
+      <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{title}</h3>
       {isLoading ? (
-        <div className="mt-4 h-16 w-24 animate-pulse rounded bg-slate-200 dark:bg-slate-700" />
+        <div className="mt-5 h-10 w-28 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-800" />
       ) : (
-        <b className="mt-2 block text-3xl">{chartData?.todayValue ?? '0'}</b>
+        <b className={`mt-3 block tracking-tight text-slate-900 dark:text-white ${emphasis === 'primary' ? 'text-4xl' : 'text-3xl'}`}>
+          {chartData?.todayValue ?? '0'}
+        </b>
       )}
       {!isLoading && chartData && (
-        <div className="mt-2 h-20">
+        <div className={`mt-3 ${emphasis === 'primary' ? 'h-24' : 'h-20'}`}>
           <Chart options={options} series={chartData.series} type="line" height={80} />
         </div>
       )}
-      {!isLoading && !chartData && <p className="mt-4 text-sm text-slate-400">无数据</p>}
+      {!isLoading && !chartData && <p className="mt-5 text-sm text-slate-400">暂无可展示数据</p>}
     </section>
   );
 }

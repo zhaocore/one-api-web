@@ -35,12 +35,12 @@ export default function LoginPage() {
     siteInfo?.oidc === true;
   return (
     <div className="grid min-h-dvh bg-slate-50 lg:grid-cols-2 dark:bg-slate-950">
-      <section className="hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 p-12 text-white lg:flex lg:flex-col">
+      <section className="hidden bg-gradient-to-br from-teal-800 via-teal-700 to-teal-600 p-12 text-white lg:flex lg:flex-col">
         <b className="text-lg">One API</b>
         <div className="my-auto max-w-md">
-          <p className="mb-4 text-sm font-semibold tracking-[.24em] text-indigo-200">AI GATEWAY</p>
+          <p className="mb-4 text-sm font-semibold tracking-[.24em] text-teal-100">AI GATEWAY</p>
           <h1 className="text-5xl font-bold leading-tight">一个入口，连接所有 AI 能力。</h1>
-          <p className="mt-6 text-lg leading-8 text-indigo-100">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p>
+          <p className="mt-6 text-lg leading-8 text-teal-50">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p>
         </div>
       </section>
       <section className="flex items-center justify-center p-6">
@@ -100,12 +100,12 @@ export default function LoginPage() {
             />
           </label>
           {error && <p className="mt-4 text-sm text-rose-600">{error}</p>}
-          <button disabled={loading} className="mt-7 w-full rounded-xl bg-indigo-600 py-3 font-semibold text-white">
+          <button disabled={loading} className="mt-7 w-full rounded-xl bg-teal-700 py-3 font-semibold text-white">
             {loading ? '登录中…' : '登录'}
           </button>
           <p className="mt-6 text-center text-sm text-slate-500">
             没有账户？{' '}
-            <Link className="text-indigo-600" to="/register">
+            <Link className="text-teal-700" to="/register">
               注册账户
             </Link>
           </p>

@@ -47,7 +47,7 @@ export const defaultTheme: IThemeRGB = {
   'rgb-border-xheavy': '89 89 89', // #595959 (gray-500)
 
   // Brand colors
-  'rgb-brand-purple': '171 104 255', // #ab68ff
+  'rgb-brand-purple': '15 118 110', // #0f766e
 
   // Presentation
   'rgb-presentation': '255 255 255', // #fff (white)

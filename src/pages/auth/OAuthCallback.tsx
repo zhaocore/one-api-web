@@ -60,13 +60,13 @@ export default function OAuthCallback({ provider }: { provider: Provider }) {
         <>
           <h1 className="text-2xl font-bold">登录失败</h1>
           <p className="max-w-sm text-slate-500">{error}</p>
-          <a href="/login" className="mt-2 rounded-xl bg-indigo-600 px-5 py-2.5 font-semibold text-white">
+          <a href="/login" className="mt-2 rounded-xl bg-teal-700 px-5 py-2.5 font-semibold text-white">
             返回登录
           </a>
         </>
       ) : (
         <>
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-100 border-t-teal-700" />
           <p className="text-slate-500">正在完成登录…</p>
         </>
       )}

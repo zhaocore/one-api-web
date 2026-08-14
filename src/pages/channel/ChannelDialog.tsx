@@ -97,7 +97,7 @@ export default function ChannelDialog({ open, onOpenChange, onDone, channel }: C
             <select
               value={type}
               onChange={(event) => switchType(Number(event.target.value))}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900">
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-teal-700 dark:border-slate-700 dark:bg-slate-900">
               {CHANNEL_TYPES.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}

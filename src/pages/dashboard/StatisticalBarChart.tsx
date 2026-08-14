@@ -4,9 +4,9 @@ import { getBarDataGroup } from '~/utils/chart';
 import type { LogStatistic } from '~/api/oneApi';
 
 const COLORS = [
-  '#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#55efc4',
-  '#81ecec', '#74b9ff', '#a29bfe', '#00b894', '#00cec9', '#0984e3',
-  '#6c5ce7', '#fab1a0', '#ff7675', '#fd79a8', '#fdcb6e', '#e17055',
+  '#0f766e', '#14b8a6', '#5eead4', '#334155', '#64748b', '#94a3b8',
+  '#115e59', '#0d9488', '#99f6e4', '#1e293b', '#475569', '#cbd5e1',
+  '#134e4a', '#2dd4bf', '#ccfbf1', '#0f172a', '#64748b', '#e2e8f0',
 ];
 
 /**
@@ -56,7 +56,7 @@ export default function StatisticalBarChart({
     },
     fill: { type: 'solid' as const },
     dataLabels: { enabled: false },
-    grid: { show: true },
+    grid: { borderColor: '#e2e8f0', strokeDashArray: 4 },
     tooltip: {
       theme: 'dark' as const,
       y: { formatter: (val: number) => '$' + val },
@@ -65,16 +65,19 @@ export default function StatisticalBarChart({
   };
 
   return (
-    <section className="rounded-2xl border bg-white p-5 dark:bg-slate-900">
-      <div className="flex items-center justify-between gap-4">
-        <h3 className="font-bold">统计</h3>
+    <section className="overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white shadow-[0_20px_40px_-28px_rgba(15,23,42,0.32)] dark:border-slate-800 dark:bg-slate-950 dark:shadow-none">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 px-6 py-5 dark:border-slate-800">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">用量趋势</p>
+          <h3 className="mt-1 text-xl font-semibold tracking-tight text-slate-900 dark:text-white">近 7 天模型消耗</h3>
+        </div>
         {models.length > 1 && (
-          <label className="flex items-center gap-2 text-sm text-slate-500">
-            模型
+          <label className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+            <span className="sr-only">模型</span>
             <select
               value={selectedModel}
               onChange={(event) => setSelectedModel(event.target.value)}
-              className="rounded-lg border bg-white px-3 py-1.5 text-sm dark:bg-slate-900">
+              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 outline-none transition focus:border-teal-700 focus:ring-2 focus:ring-teal-700/15 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
               <option value="all">全部</option>
               {models.map((model) => (
                 <option key={model} value={model}>
@@ -86,11 +89,13 @@ export default function StatisticalBarChart({
         )}
       </div>
       {isLoading ? (
-        <div className="mt-4 h-64 animate-pulse rounded bg-slate-200 dark:bg-slate-700" />
+        <div className="m-6 h-64 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800" />
       ) : chartData.series.length > 0 ? (
-        <Chart options={options} series={chartData.series} type="bar" height={480} />
+        <div className="px-3 pb-2 pt-4 sm:px-5">
+          <Chart options={options} series={chartData.series} type="bar" height={480} />
+        </div>
       ) : (
-        <div className="flex h-64 items-center justify-center text-slate-400">暂无数据</div>
+        <div className="flex h-64 items-center justify-center text-slate-400">暂无可展示数据</div>
       )}
     </section>
   );

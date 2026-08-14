@@ -105,7 +105,7 @@ export default function LogsPage() {
   };
 
   const inputCls =
-    'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900';
+    'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-teal-700 dark:border-slate-700 dark:bg-slate-900';
 
   return (
     <>
@@ -145,7 +145,7 @@ export default function LogsPage() {
         </label>
         <Button onClick={handleSearch}>搜索</Button>
       </div>
-      <div className="mb-4 rounded-xl bg-indigo-50 px-4 py-3 text-sm text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300">
+      <div className="mb-4 rounded-xl bg-teal-50 px-4 py-3 text-sm text-teal-700 dark:bg-teal-950/40 dark:text-teal-300">
         已选条件下累计消费额度：<b>{formatQuota(quota)}</b>
       </div>
       {error ? (

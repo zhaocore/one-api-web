@@ -126,7 +126,7 @@ export default function ChannelTable({ rows, loading, reload, onEdit }: ChannelT
                   min={0}
                   defaultValue={item.priority}
                   disabled={busyId === item.id}
-                  className="w-20 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900"
+                  className="w-20 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm outline-none focus:border-teal-700 dark:border-slate-700 dark:bg-slate-900"
                   onBlur={(event) => handlePriority(item, event.target.value)}
                 />
               </td>

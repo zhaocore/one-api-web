@@ -47,12 +47,12 @@ export default function DashboardPage() {
           </Button>
         }
       />
-      <div className="grid gap-5 md:grid-cols-3">
-        <StatisticalLineChartCard title="今日请求量" chartData={requestChart} isLoading={isLoading} />
-        <StatisticalLineChartCard title="今日消费" chartData={quotaChart} isLoading={isLoading} />
-        <StatisticalLineChartCard title="今日 Token" chartData={tokenChart} isLoading={isLoading} />
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,.8fr)_minmax(0,.8fr)]">
+        <StatisticalLineChartCard title="今日请求量" chartData={requestChart} isLoading={isLoading} emphasis="primary" />
+        <StatisticalLineChartCard title="今日消费" chartData={quotaChart} isLoading={isLoading} emphasis="secondary" />
+        <StatisticalLineChartCard title="今日 Token" chartData={tokenChart} isLoading={isLoading} emphasis="secondary" />
       </div>
-      <div className="mt-7 grid gap-6 xl:grid-cols-[1.6fr_.8fr]">
+      <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.6fr)_minmax(18rem,.8fr)]">
         <StatisticalBarChart statistics={statistics} isLoading={isLoading} />
         <UserCard user={user} />
       </div>

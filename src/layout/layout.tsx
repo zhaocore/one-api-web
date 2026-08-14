@@ -68,7 +68,7 @@ export default function PanelLayout() {
           open ? 'translate-x-0' : '-translate-x-full'
         )}>
         <Link to="/panel/dashboard" className="mb-8 flex items-center gap-3 px-2">
-          <span className="grid size-9 place-items-center rounded-xl bg-indigo-600 font-black text-white">O</span>
+          <span className="grid size-9 place-items-center rounded-xl bg-teal-700 font-black text-white">O</span>
           <span>
             <b>One API</b>
             <small className="block text-xs text-slate-400">管理控制台</small>
@@ -86,7 +86,7 @@ export default function PanelLayout() {
                   cn(
                     'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium',
                     isActive
-                      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300'
+                      ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300'
                       : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
                   )
                 }>
@@ -96,7 +96,7 @@ export default function PanelLayout() {
             ))}
         </nav>
         <div className="flex items-center gap-2 rounded-2xl bg-slate-50 p-3 dark:bg-slate-800">
-          <span className="grid size-8 place-items-center rounded-full bg-indigo-600 text-xs text-white">{(user?.username || 'U')[0]}</span>
+          <span className="grid size-8 place-items-center rounded-full bg-teal-700 text-xs text-white">{(user?.username || 'U')[0]}</span>
           <span className="min-w-0 flex-1">
             <b className="block truncate text-sm">{user?.display_name || user?.username || '加载中'}</b>
             <small className="text-slate-400">{role >= 10 ? '管理员' : '普通用户'}</small>

@@ -41,12 +41,12 @@ export default function ForgetPasswordPage() {
         </label>
         {error && <p className="mt-4 text-sm text-rose-600">{error}</p>}
         {success && <p className="mt-4 text-sm text-emerald-600">{success}</p>}
-        <button disabled={loading} className="mt-7 w-full rounded-xl bg-indigo-600 py-3 font-semibold text-white">
+        <button disabled={loading} className="mt-7 w-full rounded-xl bg-teal-700 py-3 font-semibold text-white">
           {loading ? '提交中…' : '提交'}
         </button>
         <p className="mt-6 text-center text-sm text-slate-500">
           想起来了？{' '}
-          <Link className="text-indigo-600" to="/login">
+          <Link className="text-teal-700" to="/login">
             返回登录
           </Link>
         </p>

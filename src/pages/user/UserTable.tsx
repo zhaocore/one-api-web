@@ -86,7 +86,7 @@ export default function UserTable({ rows, loading, reload, onEdit }: UserTablePr
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center gap-1.5">
-                  <span className="inline-flex rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300" title="剩余额度">
+                  <span className="inline-flex rounded-full bg-teal-50 px-2 py-0.5 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-300" title="剩余额度">
                     {renderQuota(item.quota)}
                   </span>
                   <span className="inline-flex rounded-full bg-rose-50 px-2 py-0.5 text-xs font-medium text-rose-700 dark:bg-rose-500/15 dark:text-rose-300" title="已用额度">

@@ -115,7 +115,7 @@ export default function UserDialog({ open, onOpenChange, onDone, user }: UserDia
                 <select
                   value={group}
                   onChange={(event) => setGroup(event.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-900"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 outline-none focus:border-teal-700 dark:border-slate-700 dark:bg-slate-900"
                 >
                   {groupOptions.map((option) => (
                     <option key={option} value={option}>

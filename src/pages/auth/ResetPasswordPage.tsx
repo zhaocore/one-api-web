@@ -75,11 +75,11 @@ export default function ResetPasswordPage() {
           />
         </label>
         {error && <p className="mt-4 text-sm text-rose-600">{error}</p>}
-        <button disabled={loading} className="mt-7 w-full rounded-xl bg-indigo-600 py-3 font-semibold text-white">
+        <button disabled={loading} className="mt-7 w-full rounded-xl bg-teal-700 py-3 font-semibold text-white">
           {loading ? '提交中…' : '重置密码'}
         </button>
         <p className="mt-6 text-center text-sm text-slate-500">
-          <Link className="text-indigo-600" to="/login">
+          <Link className="text-teal-700" to="/login">
             返回登录
           </Link>
         </p>

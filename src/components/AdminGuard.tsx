@@ -15,7 +15,7 @@ export default function AdminGuard({ children }: { children: ReactNode }) {
         <ShieldX className="size-12 text-rose-500" />
         <h2 className="text-2xl font-bold">无权限访问</h2>
         <p className="max-w-sm text-slate-500">当前账户为普通用户，无权访问管理功能。如需访问，请联系管理员提升权限。</p>
-        <Link to="/panel/dashboard" className="mt-2 rounded-xl bg-indigo-600 px-5 py-2.5 font-semibold text-white">
+        <Link to="/panel/dashboard" className="mt-2 rounded-xl bg-teal-700 px-5 py-2.5 font-semibold text-white">
           返回总览
         </Link>
       </div>
