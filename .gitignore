@@ -7,3 +7,5 @@ log
 temp
 public
 .reasonix/
+.codegraph
+.cursor

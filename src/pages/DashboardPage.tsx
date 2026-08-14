@@ -1,40 +1,62 @@
 import { useEffect, useState } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@librechat/client';
-import { Log, request } from '~/api/oneApi';
+import { apiGet, type Log, type LogStatistic, type User } from '~/api/oneApi';
 import PageHeader from '../components/PageHeader';
 import { useResource } from '~/layout/hooks/useResource';
-import DashboardStats from './dashboard/DashboardStats';
-import QuickStart from './dashboard/QuickStart';
+import StatisticalLineChartCard from './dashboard/StatisticalLineChartCard';
+import StatisticalBarChart from './dashboard/StatisticalBarChart';
+import UserCard from './dashboard/UserCard';
 import RecentLogs from './dashboard/RecentLogs';
-import UsageTrend from './dashboard/UsageTrend';
+import { generateLineCardOption, type LineCardOption } from '~/utils/chart';
 
 export default function DashboardPage() {
-  const { data: logs, loading, error, reload } = useResource<Log>('/api/log/self?p=0');
-  const [quota, setQuota] = useState(0);
+  const { data: logs, loading: logsLoading, error, reload } = useResource<Log>('/api/log/self?p=0');
+  const [isLoading, setLoading] = useState(true);
+  const [statistics, setStatistics] = useState<LogStatistic[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+
+  const load = () => {
+    setLoading(true);
+    apiGet<LogStatistic[]>('/api/user/dashboard')
+      .then((data) => setStatistics(data ?? []))
+      .catch(() => setStatistics([]))
+      .finally(() => setLoading(false));
+  };
+
   useEffect(() => {
-    request<{ quota: number }>('/api/log/self/stat', { method: 'GET' })
-      .then((data) => setQuota(data.quota))
+    load();
+    apiGet<User>('/api/user/self')
+      .then(setUser)
       .catch(() => undefined);
   }, []);
+
+  const requestChart: LineCardOption = generateLineCardOption(statistics, 'RequestCount');
+  const quotaChart: LineCardOption = generateLineCardOption(statistics, 'Quota');
+  const tokenChart: LineCardOption = generateLineCardOption(statistics, 'PromptTokens');
+
   return (
     <>
       <PageHeader
         title="早上好"
         description="这是你的 API 服务运行概览。"
         action={
-          <Button variant="outline" onClick={reload}>
+          <Button variant="outline" onClick={load}>
             <RefreshCw className="size-4" />
             刷新数据
           </Button>
         }
       />
-      <DashboardStats quota={quota} logCount={logs.length} />
-      <div className="mt-7 grid gap-6 xl:grid-cols-[1.45fr_.85fr]">
-        <UsageTrend />
-        <QuickStart />
+      <div className="grid gap-5 md:grid-cols-3">
+        <StatisticalLineChartCard title="今日请求量" chartData={requestChart} isLoading={isLoading} />
+        <StatisticalLineChartCard title="今日消费" chartData={quotaChart} isLoading={isLoading} />
+        <StatisticalLineChartCard title="今日 Token" chartData={tokenChart} isLoading={isLoading} />
       </div>
-      <RecentLogs logs={logs} loading={loading} error={error} reload={reload} />
+      <div className="mt-7 grid gap-6 xl:grid-cols-[1.6fr_.8fr]">
+        <StatisticalBarChart statistics={statistics} isLoading={isLoading} />
+        <UserCard user={user} />
+      </div>
+      <RecentLogs logs={logs} loading={logsLoading} error={error} reload={reload} />
     </>
   );
 }

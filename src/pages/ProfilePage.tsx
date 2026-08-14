@@ -18,7 +18,7 @@ export default function ProfilePage() {
     <>
       <PageHeader title="账户设置" description="管理个人资料、安全凭据和额度信息。" />
       <div className="grid gap-6 xl:grid-cols-[1fr_.8fr]">
-        <ProfileSummary user={user} />
+        <ProfileSummary user={user} onUpdated={setUser} />
         <DeveloperAccess />
       </div>
     </>

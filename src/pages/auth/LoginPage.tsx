@@ -1,9 +1,116 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { request, User } from '~/api/oneApi';
+import { useSetAtom } from 'jotai';
+import { apiPost, type User } from '~/api/oneApi';
+import { accountAtom } from '~/store';
+import { useSiteInfo } from '~/hooks/useSiteInfo';
+import { onGitHubOAuthClicked, onLarkOAuthClicked, onOidcClicked } from '~/utils/oauth';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState(''); const [password, setPassword] = useState(''); const [error, setError] = useState(''); const [loading, setLoading] = useState(false); const navigate = useNavigate();
-  const submit = async (event: FormEvent) => { event.preventDefault(); setLoading(true); setError(''); try { await request<User>('/api/user/login', { method: 'POST', body: JSON.stringify({ username, password }) }); navigate('/panel/dashboard'); } catch (reason) { setError(reason instanceof Error ? reason.message : '登录失败'); } finally { setLoading(false); } };
-  return <div className="grid min-h-dvh bg-slate-50 lg:grid-cols-2 dark:bg-slate-950"><section className="hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 p-12 text-white lg:flex lg:flex-col"><b className="text-lg">One API</b><div className="my-auto max-w-md"><p className="mb-4 text-sm font-semibold tracking-[.24em] text-indigo-200">AI GATEWAY</p><h1 className="text-5xl font-bold leading-tight">一个入口，连接所有 AI 能力。</h1><p className="mt-6 text-lg leading-8 text-indigo-100">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p></div></section><section className="flex items-center justify-center p-6"><form onSubmit={submit} className="w-full max-w-[400px]"><h2 className="text-3xl font-bold">欢迎回来</h2><p className="mt-2 text-slate-500">登录以进入管理控制台</p><label className="mt-8 block text-sm font-medium">用户名<input value={username} onChange={(event) => setUsername(event.target.value)} required className="mt-2 w-full rounded-xl border bg-white px-3 py-3 dark:bg-slate-900" /></label><label className="mt-5 block text-sm font-medium">密码<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required className="mt-2 w-full rounded-xl border bg-white px-3 py-3 dark:bg-slate-900" /></label>{error && <p className="mt-4 text-sm text-rose-600">{error}</p>}<button disabled={loading} className="mt-7 w-full rounded-xl bg-indigo-600 py-3 font-semibold text-white">{loading ? '登录中…' : '登录'}</button><p className="mt-6 text-center text-sm text-slate-500">没有账户？ <Link className="text-indigo-600" to="/register">注册账户</Link></p></form></section></div>;
+  const siteInfo = useSiteInfo();
+  const setAccount = useSetAtom(accountAtom);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const user = await apiPost<User>('/api/user/login', { username, password });
+      setAccount(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      navigate('/panel/dashboard');
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : '登录失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+  const hasOAuth =
+    siteInfo?.github_oauth === true ||
+    siteInfo?.lark_login === true ||
+    siteInfo?.oidc === true;
+  return (
+    <div className="grid min-h-dvh bg-slate-50 lg:grid-cols-2 dark:bg-slate-950">
+      <section className="hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 p-12 text-white lg:flex lg:flex-col">
+        <b className="text-lg">One API</b>
+        <div className="my-auto max-w-md">
+          <p className="mb-4 text-sm font-semibold tracking-[.24em] text-indigo-200">AI GATEWAY</p>
+          <h1 className="text-5xl font-bold leading-tight">一个入口，连接所有 AI 能力。</h1>
+          <p className="mt-6 text-lg leading-8 text-indigo-100">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p>
+        </div>
+      </section>
+      <section className="flex items-center justify-center p-6">
+        <form onSubmit={submit} className="w-full max-w-[400px]">
+          <h2 className="text-3xl font-bold">欢迎回来</h2>
+          <p className="mt-2 text-slate-500">登录以进入管理控制台</p>
+          {hasOAuth && (
+            <div className="mt-6 space-y-2">
+              {siteInfo?.github_oauth === true && (
+                <button
+                  type="button"
+                  onClick={() => void onGitHubOAuthClicked(siteInfo.github_client_id)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border bg-white px-3 py-3 text-sm font-medium dark:bg-slate-900">
+                  使用 GitHub 登录
+                </button>
+              )}
+              {siteInfo?.lark_login === true && (
+                <button
+                  type="button"
+                  onClick={() => void onLarkOAuthClicked(siteInfo.lark_client_id)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border bg-white px-3 py-3 text-sm font-medium dark:bg-slate-900">
+                  使用飞书登录
+                </button>
+              )}
+              {siteInfo?.oidc === true && (
+                <button
+                  type="button"
+                  onClick={() => void onOidcClicked(siteInfo.oidc_authorization_endpoint, siteInfo.oidc_client_id)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border bg-white px-3 py-3 text-sm font-medium dark:bg-slate-900">
+                  使用 OIDC 登录
+                </button>
+              )}
+              <div className="flex items-center gap-3 py-1">
+                <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
+                <span className="text-xs text-slate-400">或</span>
+                <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
+              </div>
+            </div>
+          )}
+          <label className="mt-8 block text-sm font-medium">
+            用户名
+            <input
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              required
+              className="mt-2 w-full rounded-xl border bg-white px-3 py-3 dark:bg-slate-900"
+            />
+          </label>
+          <label className="mt-5 block text-sm font-medium">
+            密码
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              className="mt-2 w-full rounded-xl border bg-white px-3 py-3 dark:bg-slate-900"
+            />
+          </label>
+          {error && <p className="mt-4 text-sm text-rose-600">{error}</p>}
+          <button disabled={loading} className="mt-7 w-full rounded-xl bg-indigo-600 py-3 font-semibold text-white">
+            {loading ? '登录中…' : '登录'}
+          </button>
+          <p className="mt-6 text-center text-sm text-slate-500">
+            没有账户？{' '}
+            <Link className="text-indigo-600" to="/register">
+              注册账户
+            </Link>
+          </p>
+        </form>
+      </section>
+    </div>
+  );
 }

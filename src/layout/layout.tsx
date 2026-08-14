@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
 import {
   Bell,
   ChevronDown,
@@ -17,7 +18,8 @@ import {
   Users,
 } from 'lucide-react';
 import { Button } from '@librechat/client';
-import { User, request } from '~/api/oneApi';
+import { request } from '~/api/oneApi';
+import { accountAtom } from '~/store';
 import { cn } from '~/utils';
 
 const menu = [
@@ -33,16 +35,11 @@ const menu = [
 
 /** 面板应用壳，仅管理导航、主题和当前会话。 */
 export default function PanelLayout() {
-  const [user, setUser] = useState<User | null>(null);
+  const user = useAtomValue(accountAtom);
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
   const location = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {
-    request<User>('/api/user/self', { method: 'GET' })
-      .then(setUser)
-      .catch(() => navigate('/login'));
-  }, []);
   const role = user?.role ?? 1;
   const title =
     (
@@ -130,7 +127,12 @@ export default function PanelLayout() {
               variant="ghost"
               size="icon"
               aria-label="退出登录"
-              onClick={() => void request('/api/user/logout', { method: 'GET' }).finally(() => navigate('/login'))}>
+              onClick={() => {
+                void request('/api/user/logout', { method: 'GET' }).finally(() => {
+                  localStorage.removeItem('user');
+                  navigate('/login');
+                });
+              }}>
               <LogOut />
             </Button>
           </div>
