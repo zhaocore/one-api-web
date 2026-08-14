@@ -5,6 +5,7 @@ import { apiPost, type User } from '~/api/oneApi';
 import { accountAtom } from '~/store';
 import { useSiteInfo } from '~/hooks/useSiteInfo';
 import { onGitHubOAuthClicked, onLarkOAuthClicked, onOidcClicked } from '~/utils/oauth';
+import loginNetworkImage from '~/assets/images/login-network.webp';
 
 export default function LoginPage() {
   const siteInfo = useSiteInfo();
@@ -35,12 +36,17 @@ export default function LoginPage() {
     siteInfo?.oidc === true;
   return (
     <div className="grid min-h-dvh bg-slate-50 lg:grid-cols-2 dark:bg-slate-950">
-      <section className="hidden bg-gradient-to-br from-teal-800 via-teal-700 to-teal-600 p-12 text-white lg:flex lg:flex-col">
-        <b className="text-lg">One API</b>
-        <div className="my-auto max-w-md">
-          <p className="mb-4 text-sm font-semibold tracking-[.24em] text-teal-100">AI GATEWAY</p>
-          <h1 className="text-5xl font-bold leading-tight">一个入口，连接所有 AI 能力。</h1>
-          <p className="mt-6 text-lg leading-8 text-teal-50">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p>
+      <section
+        className="relative hidden overflow-hidden bg-teal-950 p-12 text-white lg:flex lg:flex-col"
+        style={{ backgroundImage: `url(${loginNetworkImage})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-950/90 via-teal-900/68 to-slate-950/48" />
+        <div className="relative flex h-full flex-col">
+          <b className="text-lg tracking-tight">One API</b>
+          <div className="my-auto max-w-md">
+            <p className="mb-4 text-sm font-semibold tracking-[.24em] text-teal-100">AI GATEWAY</p>
+            <h1 className="text-5xl font-bold leading-tight">一个入口，连接所有 AI 能力。</h1>
+            <p className="mt-6 text-lg leading-8 text-teal-50">统一管理模型渠道、访问令牌和用量数据，让 AI 服务稳定、清晰、可控。</p>
+          </div>
         </div>
       </section>
       <section className="flex items-center justify-center p-6">
