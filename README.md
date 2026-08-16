@@ -6,15 +6,15 @@
 
 ### 登录页
 
-![登录页](docs/0be44c2a.png)
+![登录页](docs//images/0be44c2a.png)
 
 ### 仪表盘总览
 
-![仪表盘总览](docs/ScreenShot_2026-08_801.png)
+![仪表盘总览](docs/images/ScreenShot_2026-08_801.png)
 
 ### 令牌管理
 
-![令牌管理](docs/ScreenShot_2026-08_361.png)
+![令牌管理](docs/images/ScreenShot_2026-08_361.png)
 
 ## 技术栈
 
